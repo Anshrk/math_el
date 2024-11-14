@@ -3,12 +3,13 @@ import streamlit as st
 import numpy as np
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
+import pandas as pd
 
 # Set up page configuration
 st.set_page_config(page_title="ODE System Solver", layout="wide")
 
 # Navigation between pages
-page = st.sidebar.selectbox("Select a page:", ["Collective Graph", "Individual Graphs"])
+page = st.sidebar.selectbox("Select a page:", ["Collective Graph", "Individual Graphs", "Verification values"])
 
 if page == "Collective Graph":
     # Page 1: Code Explanation
@@ -91,14 +92,14 @@ if page == "Collective Graph":
     fig, ax = plt.subplots(figsize=(14, 8))
 
     # Plot with negative eta values for mirroring
-    ax.plot(-eta_vals, f_prime_vals/100000, label="f'(η)", linestyle='-', color='blue')
-    ax.plot(-eta_vals, F_prime_vals/100000, label="F'(η)", linestyle='-', color='orange')
-    ax.plot(-eta_vals, -theta_vals/100000, label="Q'(η)", linestyle='-', color='green')
-    ax.plot(-eta_vals, theta_p_vals/100000, label="Q_p'(η)", linestyle='-', color='red')
-    ax.plot(-eta_vals, -f_vals/100000, label='f(η)', linestyle='-', color='black')
-    ax.plot(-eta_vals, -F_vals/100000, label='F(η)', linestyle='-', color='yellow')
-    ax.plot(-eta_vals, -theta_vals/100000, label='θ(η)', linestyle='-', color='pink')
-    ax.plot(-eta_vals, theta_p_vals/100000, label='θ_p(η)', linestyle='-', color='purple')
+    ax.plot(-eta_vals+5, f_prime_vals/100000, label="f'(η)", linestyle='-', color='blue')
+    ax.plot(-eta_vals+5, F_prime_vals/100000, label="F'(η)", linestyle='-', color='orange')
+    ax.plot(-eta_vals+5, -theta_vals/100000, label="Q'(η)", linestyle='-', color='green')
+    ax.plot(-eta_vals+5, theta_p_vals/100000, label="Q_p'(η)", linestyle='-', color='red')
+    ax.plot(-eta_vals+5, -f_vals/100000, label='f(η)', linestyle='-', color='black')
+    ax.plot(-eta_vals+5, -F_vals/100000, label='F(η)', linestyle='-', color='yellow')
+    ax.plot(-eta_vals+5, -theta_vals/100000, label='θ(η)', linestyle='-', color='pink')
+    ax.plot(-eta_vals+5, theta_p_vals/100000, label='θ_p(η)', linestyle='-', color='purple')
 
     # Labels and title
     ax.set_xlabel('η')
@@ -189,28 +190,28 @@ elif page == "Individual Graphs":
     # Plot the solutions
     fig, ax = plt.subplots(figsize=(14, 8))
     # Plot with negative eta values for mirroring
-    ax.plot(-eta_vals, f_prime_vals/100000, label="f'(η)", linestyle='-', color='blue')
+    ax.plot(-eta_vals+5, f_prime_vals/100000, label="f'(η)", linestyle='-', color='blue')
 
     fig1, ax1 = plt.subplots(figsize=(14, 8))
-    ax1.plot(-eta_vals, F_prime_vals/100000, label="F'(η)", linestyle='-', color='orange')
+    ax1.plot(-eta_vals+5, F_prime_vals/100000, label="F'(η)", linestyle='-', color='orange')
 
     fig2, ax2 = plt.subplots(figsize=(14, 8))
-    ax2.plot(-eta_vals, -theta_vals/100000, label="Q'(η)", linestyle='-', color='green')
+    ax2.plot(-eta_vals+5, -theta_vals/100000, label="Q'(η)", linestyle='-', color='green')
 
     fig3, ax3 = plt.subplots(figsize=(14, 8))
-    ax3.plot(-eta_vals, theta_p_vals/100000, label="Q_p'(η)", linestyle='-', color='red')
+    ax3.plot(-eta_vals+5, theta_p_vals/100000, label="Q_p'(η)", linestyle='-', color='red')
 
     fig4, ax4 = plt.subplots(figsize=(14, 8))
-    ax4.plot(-eta_vals, -f_vals/100000, label='f(η)', linestyle='-', color='black')
+    ax4.plot(-eta_vals+5, -f_vals/100000, label='f(η)', linestyle='-', color='black')
 
     fig5, ax5 = plt.subplots(figsize=(14, 8))
-    ax5.plot(-eta_vals, -F_vals/100000, label='F(η)', linestyle='-', color='yellow')
+    ax5.plot(-eta_vals+5, -F_vals/100000, label='F(η)', linestyle='-', color='yellow')
 
     fig6, ax6 = plt.subplots(figsize=(14, 8))
-    ax6.plot(-eta_vals, -theta_vals/100000, label='θ(η)', linestyle='-', color='pink')
+    ax6.plot(-eta_vals+5, -theta_vals/100000, label='θ(η)', linestyle='-', color='pink')
 
     fig7, ax7 = plt.subplots(figsize=(14, 8))
-    ax7.plot(-eta_vals, theta_p_vals/100000, label='θ_p(η)', linestyle='-', color='purple')
+    ax7.plot(-eta_vals+5, theta_p_vals/100000, label='θ_p(η)', linestyle='-', color='purple')
 
 
     # Labels and title
@@ -273,8 +274,12 @@ elif page == "Individual Graphs":
     st.pyplot(fig7)
 
 
-import streamlit as st
-import numpy as np
-from scipy.integrate import solve_ivp
-import matplotlib.pyplot as plt
+else:
+    # Load the CSV file into a DataFrame
+    df = pd.read_csv('data.csv')
+
+    # Display the DataFrame in Streamlit
+    st.title("Table Display")
+    st.write("Here is the table data:")
+    st.dataframe(df)  # You can also use st.table(df) for a static table view
 
