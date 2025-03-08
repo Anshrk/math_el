@@ -1,2 +1,2 @@
 Demo hosted at
-[Laminar flow of fluid simulation](math-el.streamlit.app)
+[Laminar flow of fluid simulation](https://math-el.streamlit.app)
